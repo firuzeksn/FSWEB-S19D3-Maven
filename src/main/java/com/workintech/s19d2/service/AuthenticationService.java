@@ -22,13 +22,11 @@ public class AuthenticationService {
     public Member register(String email, String password) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
-            // Test tam olarak bu mesajı bekliyor:
             throw new RuntimeException("User with given email already exist");
         }
 
         String encodedPassword = passwordEncoder.encode(password);
 
-        // Testte ADMIN rolü aranıyor:
         Role adminRole = roleRepository.findByAuthority("ADMIN").orElse(null);
 
         List<Role> roles = new ArrayList<>();
